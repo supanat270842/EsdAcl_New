@@ -1,0 +1,163 @@
+﻿@model ListSearch
+@{
+    ViewData["Title"] = "Edit";
+}
+<head>
+    <style>
+        .bg-thead {
+            text-align: left;
+            background: #EEC912;
+            color: #fff
+        }
+
+        .calloutbg {
+            text-align: left;
+            background: #EEC912;
+            color: #000
+        }
+    </style>
+</head>
+
+<div class="container-body">
+    <div class="callout callout-warning calloutbg">
+        <h5>Edit access card control</h5>
+        <p>
+            An Access Control List (ACL) defines who can access entrance gate for CTH employee.
+        </p>
+    </div>
+    <form id="frmMain">
+        <div class="rounded-lg p-3 mb-3">
+            <div class="row form-group">
+                <label for="txtHcardNo" class="col-md-2 col-sm-4 col-form-label"> Card No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input asp-for="carD_ID" type="text" id="txtHcardNo" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="txtHupDateBy" class="col-md-2 col-sm-4 col-form-label">Update By :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input asp-for="updatE_BY" type="text" id="txtHupDateBy" class="form-control" readonly />
+                </div>
+                <label for="txtHlastUpdate" class="col-md-2 col-sm-4 col-form-label">Last Update :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input asp-for="lasT_UPDATE" type="text" id="txtHlastUpdate" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container-body">
+    <fieldset class="border rounded-lg p-3 mb-3">
+        <legend class="w-auto p-3 rounded m-0"><i class="fas fa-edit"></i>&nbsp Edit Condition</legend>
+        <form id="frmMain">
+            <div class="row form-group">
+                <label for="txtEmp" class="col-md-2 col-sm-4 col-form-label">Employee No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtEmp" class="form-control" maxlength="8" />
+
+                </div>
+                <label for="txtName" class="col-md-2 col-sm-4 col-form-label ">Name :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtName" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="txtPosition" class="col-md-2 col-sm-4 col-form-label ">Position :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtPosition" class="form-control" />
+                </div>
+                <label for="txtCType" class="col-md-2 col-sm-4 col-form-label">Card Type :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select id="txtCType" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                        <option value="HID">HID</option>
+                        <option value="HIP">HIP</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="txtFront" class="col-md-2 col-sm-4 col-form-label">Front No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtFront" maxlength="5" class="form-control" />
+                </div>
+                <label for="txtBack" class="col-md-2 col-sm-4 col-form-label">Back No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtBack" maxlength="5" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="txtHand" class="col-md-2 col-sm-4 col-form-label ">Handicap :</label>
+                <div class="col-md-4 col-sm-8 pt-2">
+                    <input type="radio" name="yorn" value="Yes" id="Y" class="gg" />
+                    <label class="mr-4" for="Y">Yes</label>
+                    <input type="radio" name="yorn" value="No" id="N" checked="checked" />
+                    <label for="N">No</label>
+                </div>
+                <label for="txtCardsts" class="col-md-2 col-sm-4 col-form-label">Card status :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select id="txtCardsts" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                        <option value="Act">Active</option>
+                        <option value="NON">InActive</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="txtRemark" class="col-md-2 col-sm-4 col-form-label">Remark :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select asp-items="ViewBag.Remark" id="txtRemark" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-5 col-sm-8">
+                    <button type="button" class="btn btn-success mr-3" id="btnEdit">
+                        <i class="fas fa-edit"></i>
+                        Edit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+@section scripts
+    {
+    <script>
+
+        //function
+
+        function edit() {
+            const url = '@Url.Action("EditACL","Edit")';
+            const param = {};
+
+            $.each($('#frmMain .form-control'), function () {
+                param[$(this).attr('id')] = $(this).val();
+            });
+
+            $.ajax({
+                url: url,
+                data: param,
+                type: 'POST',
+            });
+        }
+
+        //event
+        $(document).on('click', '#btnEdit', function () {
+            edit();
+        });
+                //page load
+
+
+    </script>
+}
+
+
+

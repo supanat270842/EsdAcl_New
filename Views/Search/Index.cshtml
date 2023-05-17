@@ -1,0 +1,297 @@
+﻿@{
+    ViewData["Title"] = "Search";
+}
+<head>
+    <style>
+        .bg-thead {
+            text-align: left;
+            background: #EEC912;
+            color: #fff
+        }
+
+        .calloutbg {
+            text-align: left;
+            background: #EEC912;
+            color: #000
+        }
+    </style>
+</head>
+
+<div class="container-body">
+    <div class="callout callout-warning calloutbg">
+        <h5>Search and Edit</h5>
+        <p>
+            An Access Control List (ACL) defines who can access entrance gate for CTH employee.
+        </p>
+    </div>
+    <fieldset class="border rounded-lg p-3 mb-3">
+        <legend class="w-auto p-3 rounded m-0"><i class="fas fa-search"></i>&nbspSearch Condition</legend>
+        <form id="frmMain">
+            <div class="row form-group">
+                <label for="txtEmpNo" class="col-md-2 col-sm-4 col-form-label">Employee No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtEmpNo" class="form-control" placeholder="Employee No" />
+                </div>
+                <label for="txtEmpName" class="col-md-2 col-sm-4 col-form-label">Employee Number :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtEmpName" class="form-control" placeholder="Employee Number" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="txtFront" class="col-md-2 col-sm-4 col-form-label">Front No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtFront" class="form-control" placeholder="Front No" />
+                </div>
+                <label for="txtBack" class="col-md-2 col-sm-4 col-form-label">Back No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtBack" class="form-control" placeholder="Back No" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="txtCard" class="col-md-2 col-sm-4 col-form-label">Card No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtCard" class="form-control" placeholder="Card No" />
+                </div>
+                <label for="txtCType" class="col-md-2 col-sm-4 col-form-label">Card Type :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select id="txtCType" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                        <option value="HID">HID</option>
+                        <option value="HIP">HIP</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="txtCreateBy" class="col-md-2 col-sm-4 col-form-label">Created by :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtCreateBy" class="form-control" placeholder="Created by" />
+                </div>
+                <label for="txtDateSt" class="col-md-1 col-sm-4 col-form-label">Date Range :</label>
+                <div class="col-md-2 col-sm-8">
+                    <input type="date" id="txtDateSt" class="form-control" placeholder="Date Range" />
+                </div>
+                <label for="txtDateEn" class="col-md-1 col-sm-4 col-form-label">To Date :</label>
+                <div class="col-md-2 col-sm-8">
+                    <input type="date" id="txtDateEn" class="form-control" placeholder="To Date" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="txtCardStatus" class="col-md-2 col-sm-4 col-form-label">Card status :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select id="txtCardStatus" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                        <option value="Act">Active</option>
+                        <option value="NON">InActive</option>
+                    </select>
+                </div>
+                <label for="txtRemark" class="col-md-2 col-sm-4 col-form-label">Remark :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select asp-items="ViewBag.Remark" id="txtRemark" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-5 col-sm-8">
+                    <button type="button" class="btn btn-primary mr-3" id="btnSearch">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                    <button type="button" class="btn btn-danger mr-3" id="btnReset">
+                        <i style="font-size:14px" class="fa">&#xf021;</i>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+
+    <div class="div-scroll">
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead><tr></tr></thead>
+            <tbody> </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var myTableCol = ['No.', 'Emp No.', 'Card No.', 'Type', 'Emp Name.', 'Remark', 'Handicap', 'Status', 'Last Date', 'Delete and Edit '];
+
+        //function
+        function checkCondition() {
+            let result = false;
+            const frmMain = $('#frmMain input');
+
+            $.each(frmMain, function () {
+                if ($(this).val() != '') {
+                    result = true;
+                }
+            });
+
+            return result;
+        }
+
+        function reset() {
+            const frmMain = $('#frmMain input, #frmMain select');
+            $.each(frmMain, function () {
+                $(this).val('');
+
+            });
+            SetDataTable();
+        }
+
+        function search() {
+            if (checkCondition()) {
+                GetSearch();
+            } else {
+                swal("Error!", "Please select your condition first!", "error");
+            }
+        }
+
+        function GetSearch() {
+            const url = '@Url.Action("GetSearch","Search")';
+            const param = {};
+
+            $.each($('#frmMain .form-control'), function () {
+                param[$(this).attr('id')] = $(this).val();
+            });
+
+            $.ajax({
+                url: url,
+                data: param,
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        SetDataTable(data.list);
+                    }
+                }
+            });
+        }
+
+        function SetDataTable(jsonObj) {
+            temp = '{}';
+            jsonObj = jsonObj == null ? temp : jsonObj;
+
+            $('#myTable').dataTable({
+                destroy: true,
+                ordering: true,
+                pagelength: 10,
+                sortAble: true,
+                data: jQuery.parseJSON(jsonObj),
+                columns: [
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { data: 'emP_NO' },
+                    { data: 'carD_ID' },
+                    { data: 'carD_TYPE' },
+                    { data: 'emP_NAME' },
+                    { data: 'lasT_REMARK' },
+                    { data: 'handicap' },
+                    { data: 'carD_STS' },
+                    { data: 'lasT_UPDATE' },
+                    {
+                        data: 'carD_ID',
+                        render: function (data) {
+                            return '<a href="Edit/Index?txtCard=' + data + '" class="btn btn-info"> Edit </a>';
+                        }
+                    }
+                ],
+                lengthmenu: [
+                    [10, 50, 100, -1],
+                    [10, 50, 100, 'All'],
+                ],
+                oLanguage: {
+                    sLengthMenu: `${uniq_dataTable_show} _MENU_`,
+                    sSearch: uniq_dataTable_search,
+                },
+                columnDefs: [
+                    {
+                        targets: 0,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 1,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 2,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 3,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 4,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 5,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 6,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 7,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 8,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 9,
+                        className: 'td-center',
+                    },
+                ],
+                autoWidth: true,
+            });
+            setTableWidth();
+            setTableInfo();
+        }
+
+        function setTableWidth() {
+            const w = $('fieldset.border.rounded-lg').innerWidth();
+            $('#myTable').css('width', w + 'px');
+        }
+
+        function setTableInfo() {
+            $('#myTable_filter label').addClass('input-group');
+            $('#myTable_filter label').addClass('mb-3');
+            $('.dt-button.buttons-excel.buttons-html5').attr('title', 'Export to Excel');
+        }
+
+        function getMyTableCol() {
+            $.each(myTableCol, function (i, val) {
+                $('#myTable thead tr').append(`<th>${val}</th>`);
+            });
+        }
+
+        //event
+        $(document).on('click', '#btnSearch', function () {
+            search();
+        });
+        $(document).on('click', '#btnReset', function () {
+            reset();
+        });
+
+        $(window).resize(function () {
+            setTableWidth();
+        });
+
+        //page load
+        $(function () {
+            getMyTableCol();
+            reset();
+        });
+
+    </script>
+}

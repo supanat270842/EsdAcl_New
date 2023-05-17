@@ -1,0 +1,339 @@
+﻿@{
+    ViewData["Title"] = "ADD ACL";
+}
+<head>
+    <style>
+        .bg-thead {
+            text-align: left;
+            background: #EEC912;
+            color: #fff
+        }
+
+        .calloutbg {
+            text-align: left;
+            background: #EEC912;
+            color: #000
+        }
+    </style>
+</head>
+
+<div class="container-body">
+    <div class="callout callout-warning calloutbg">
+        <h5>Add new card</h5>
+        <p>
+            An Access Control List (ACL) defines who can access entrance gate for CTH employee.
+        </p>
+    </div>
+    <fieldset class="border rounded-lg p-3 mb-3">
+        <legend class="w-auto p-3 rounded m-0"><i class="fas fa-plus"></i>&nbspADD</legend>
+        <form id="frmMain">
+            <div class="row form-group">
+                <label for="txtEmp" class="col-md-2 col-sm-4 col-form-label">Employee No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtEmp" class="form-control" maxlength="8" />
+
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary mr-3" id="btnGetName">
+                        <i class="fas fa-user"></i>
+                        Get name
+                    </button>
+                    <button type="button" class="btn btn-danger mr-3" id="btnReset">
+                        <i style="font-size:14px" class="fa">&#xf021;</i>
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="txtName" class="col-md-2 col-sm-4 col-form-label ">Name :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtName" class="form-control" readonly />
+                </div>
+                <label for="txtPosition" class="col-md-2 col-sm-4 col-form-label ">Position :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtPosition" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="txtFront" class="col-md-2 col-sm-4 col-form-label">Front No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtFront" maxlength="5" class="form-control" />
+                </div>
+                <label for="txtBack" class="col-md-2 col-sm-4 col-form-label">Back No :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtBack" maxlength="5" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="txtCType" class="col-md-2 col-sm-4 col-form-label">Card Type :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select id="txtCType" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                        <option value="HID">HID</option>
+                        <option value="HIP">HIP</option>
+                    </select>
+                </div>
+                <label for="txtRemark" class="col-md-2 col-sm-4 col-form-label">Remark :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select asp-items="ViewBag.Remark" id="txtRemark" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="txtHand" class="col-md-2 col-sm-4 col-form-label ">Handicap :</label>
+                <div class="col-md-3 col-sm-8 pt-2">
+                    <input type="radio" name="yorn" value="Yes" id="Y class="gg" />
+                    <label class="mr-4" for="Y">Yes</label>
+                    <input type="radio" name="yorn" value="No" id="N" checked="checked" />
+                    <label for="N">No</label>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-5 col-sm-8">
+                    <button type="button" class="btn btn-success mr-3" id="btnCreate">
+                        <i class="fas fa-plus"></i>
+                        Create
+                    </button>
+                    <button type="button" class="btn btn-warning" id="btnSearch">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </fieldset>
+
+    <div class="div-scroll">
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead><tr></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</div>
+
+@section scripts {
+    <script>
+        //function
+        var myTableCol = ['No.', 'Card No.', 'Type', 'Emp No.', 'Emp. Name', 'Remark', 'Update By', 'Last Date'];
+
+
+        function create() {
+            if ($('#txtEmp').val() != '') {
+                CreateACL();
+            } else {
+                swal("Error!", "Please select your condition first!", "error");
+            }
+        }
+
+        function reset() {
+            const frmMain = $('#frmMain input, #frmMain select');
+            $.each(frmMain, function () {
+                $(this).val('');
+
+            });
+            SetDataTable();
+        }
+
+        function getName() {
+            if ($('#txtEmp').val() != '') {
+                GetUserNo();
+            } else {
+                swal("Error!", "Please select your condition first!", "error");
+            }
+        }
+
+        function CreateACL() {
+            const url = '@Url.Action("CreateACL" , "Add_ACL")';
+            const param = {};
+            const radioButtons = document.querySelectorAll('input[name="btnSelect"]');
+
+            $.each($('#frmMain input, #frmMain select'), function () {
+                param[$(this).attr('id')] = $(this).val();
+            });
+
+            console.log(param);
+
+            $.ajax({
+                url: url,
+                data: param,
+                type: 'POST'
+            });
+        }
+
+        function GetUserNo() {
+            const url = '@Url.Action("GetUserNo", "Add_ACL")';
+            const param = {};
+
+            $.each($('#frmMain .form-control'), function () {
+                param[$(this).attr('id')] = $(this).val();
+            });
+
+            $.ajax({
+                url: url,
+                data: param,
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        console.log(data.list);
+                        //SetDataTable(data.list);
+                        const pData = JSON.parse(data.list);
+                        const fullName = pData[0].emp_name;
+                        const position = pData[0].emp_position;
+
+                        $('#txtName').val(fullName);
+                        $('#txtPosition').val(position);
+                    }
+                }
+            });
+        }
+
+        function GetAcl() {
+            const url = '@Url.Action("GetACL","Add_ACL")';
+            const param = {};
+
+            $.ajax({
+                url: url,
+                data: param,
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        SetDataTable(data.list);
+                    }
+                }
+            })
+        }
+
+        function SetDataTable(jsonObj) {
+            temp = '{}';
+            jsonObj = jsonObj == null ? temp : jsonObj;
+
+            $('#myTable').dataTable({
+                destroy: true,
+                ordering: true,
+                pageLength: 10,
+                sortAble: true,
+                data: jQuery.parseJSON(jsonObj),
+                columns: [
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { data: 'carD_ID' },
+                    { data: 'carD_TYPE' },
+                    { data: 'emP_NO' },
+                    { data: 'emP_NAME' },
+                    { data: 'lasT_REMARK' },
+                    { data: 'updatE_BY' },
+                    { data: 'lasT_UPDATE' },
+                ],
+                lengthMenu: [
+                    [10, 50, 100, -1],
+                    [10, 50, 100, 'All'],
+                ],
+                oLanguage: {
+                    sLengthMenu: `${uniq_dataTable_show} _MENU_`,
+                    sSearch: uniq_dataTable_search,
+                },
+                columnDefs: [
+                    {
+                        targets: 0,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 1,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 2,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 3,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 4,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 5,
+                        className: 'td-right',
+                    },
+                    {
+                        targets: 6,
+                        className: 'td-center',
+                    },
+                    {
+                        targets: 7,
+                        className: 'td-center',
+                    }
+                ],
+                autoWidth: true,
+            });
+            setTableWidth();
+            setTableInfo();
+        }
+
+        function setTableWidth() {
+            const w = $('fieldset.border.rounded-lg').innerWidth();
+            $('#myTable').css('width', w + 'px');
+        }
+
+        function setTableInfo() {
+            $('#myTable_filter label').addClass('input-group');
+            $('#myTable_filter label').addClass('mb-3');
+            $('.dt-button.buttons-excel.buttons-html5').attr('title', 'Export to Excel');
+        }
+
+        function getMyTableCol() {
+            $.each(myTableCol, function (i, val) {
+                $('#myTable thead tr').append(`<th>${val}</th>`);
+            });
+        }
+
+        //event
+
+        $(document).on('click', '#btnGetName', function () {
+            getName();
+        });
+        $(document).on('click', '#btnCreate', function () {
+            create();
+        });
+        $(document).on('click', '#btnReset', function () {
+            reset();
+        });
+        $(document).on('click', '#btnSearch', function () {
+            window.location = "@Url.Action("Index","Search")";
+        });
+
+        $(document).ready(function () {
+            $("#btnTest").click(function () {
+                const valueTest = $('input[name=yorn]:checked').val();
+                console.log(valueTest)
+            });
+        })
+
+        $(window).resize(function () {
+            setTableWidth();
+        });
+
+        //load page
+        $(function () {
+            getMyTableCol();
+            GetAcl();
+            reset();
+        });
+
+    </script>
+}
+

@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "TimeAttReport";
+}
+<head>
+    <style>
+        .bg-thead {
+            text-align: left;
+            background: #EEC912;
+            color: #fff
+        }
+
+        .calloutbg {
+            text-align: left;
+            background: #EEC912;
+            color: #000
+        }
+    </style>
+</head>
+
+<div class="container-body">
+    <div class="callout callout-warning calloutbg">
+        <h5>Time attendance report</h5>
+        <p>
+            An Access Control List (ACL) defines who can access entrance gate for CTH employee.
+        </p>
+    </div>
+    <fieldset class="border rounded-lg p-3 mb-3">
+        <legend class="w-auto p-3 rounded m-0"><i class="fas fa-search"></i>Search Condition</legend>
+        <form id="frmMain">
+            <div class="row form-group">
+                <label for="txtEmp" class="col-md-2 col-sm-4 col-form-label">Employee Number :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtEmp" class="form-control" maxlength="18" placeholder="Employee Number" />
+                </div>
+
+                <label for="txtGate" class="col-md-2 col-sm-4 col-form-label">Gate Type :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select id="txtGate" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="txtName" class="col-md-2 col-sm-4 col-form-label">Employee Name :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtName" class="form-control" maxlength="18" placeholder="Employee Name" />
+                </div>
+                <label for="txtBuild" class="col-md-2 col-sm-4 col-form-label">Building :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select id="txtBuild" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="txtCard" class="col-md-2 col-sm-4 col-form-label">Card Number :</label>
+                <div class="col-md-4 col-sm-8">
+                    <input type="text" id="txtCard" class="form-control" maxlength="18" placeholder="Card Number" />
+                </div>
+                <label for="txtCost" class="col-md-2 col-sm-4 col-form-label">Cost Center :</label>
+                <div class="col-md-4 col-sm-8">
+                    <select id="txtCost" class="form-control">
+                        <option value="">----- Please Choose -----</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+
+</div>
+

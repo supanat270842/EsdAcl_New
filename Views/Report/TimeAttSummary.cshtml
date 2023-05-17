@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "TimeAttSummary";
+}
+
+<head>
+    <style>
+        .bg-thead {
+            text-align: left;
+            background: #EEC912;
+            color: #fff
+        }
+
+        .calloutbg {
+            text-align: left;
+            background: #EEC912;
+            color: #000
+        }
+    </style>
+</head>
+
+<div class="container-body">
+    <div class="callout callout-warning calloutbg">
+        <h5>Time attendance report</h5>
+        <p>
+            An Access Control List (ACL) defines who can access entrance gate for CTH employee.
+        </p>
+    </div>
+    <fieldset class="border rounded-lg p-3 mb-3">
+        <legend class="w-auto p-3 rounded m-0"><i class="fas fa-search"></i>Search Condition</legend>
+        <div class="row form-group">
+            <label for="txtDateSt" class="col-md-1 col-sm-2 col-form-label">Start Date :</label>
+            <div class="col-md-2 col-sm-8">
+                <input type="date" id="txtDateSt" class="form-control" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="txtDateEd" class="col-md-1 col-sm-2 col-form-label">End Date :</label>
+            <div class="col-md-2 col-sm-8">
+                <input type="date" id="txtDateEd" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row container">
+            <button type="button" class="btn btn-success mr-3" id="btnSearch">
+                    <i class="fas fa-search"></i>
+                    Serach
+                </button>
+                <button type="button" class="btn btn-danger mr-3" id="btnReset">
+                    <i class="fa" style="font-size:14px">&#xf021</i>
+                    Reset
+                </button>
+        </div>
+    </fieldset>
+</div>

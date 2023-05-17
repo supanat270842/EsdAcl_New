@@ -1,0 +1,329 @@
+﻿@{
+    var name = ViewBag.Name;
+    var id = ViewBag.ID;
+    var projectName = ViewBag.ProjectName;
+    var ipAddress = ViewBag.IP;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EsdAcl | @ViewBag.Title</title>
+    <link rel="icon" href="~/AdminLTE/dist/img/fan.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="~/AdminLTE/dist/img/fan.png" type="image/x-icon" />
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/AdminLTE/dist/css/adminlte.min.css">
+    <!-- ~/Content/css -->
+    <link rel="stylesheet" href="~/Content/DataTables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="~/Content/DataTables/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/site.css">
+
+    <!-- Toast -->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    @RenderSection("csses", required: false)
+
+    <style>
+        .ex1 {
+            padding-left: 20px;
+        }
+
+        .navreal {
+            background: #EEC912 !important;
+        }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse">
+    @* layout-fixed" *@
+    <div class="wrapper">
+        <!-- Preloader -->
+        <!--class="animation__shake"-->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img src="~/AdminLTE/dist/img/loading.gif" alt="Celestica" height="25" width="25">
+        </div>
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light ">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
+                </li>
+            </ul>
+
+            @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>*@
+
+            <!-- Right navbar links -->
+            <div class="collapse navbar-collapse">
+                <ul class=" navbar-nav ml-auto">
+                    <!-- Navbar Search -->
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-close-others="true"> @name <b class="caret"></b></a>
+                        <ul class="nav-item dropdown-menu multi-level">
+                            <li class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <text>@id</text>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="fas fa-server"></i>
+                                <text>@ipAddress</text>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="nav-icon fas fa-external-link-alt"></i>
+                                <a data-toggle="modal" data-target="#modal-logout">
+                                    <text style="color: black">Logout</text>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a asp-controller="Home" asp-action="Index" class="brand-link ex1">
+                <img src="~/AdminLTE/dist/img/iconCeles.png" title="Celestica" height="30" width="30">
+                <span class="brand-text font-weight-light float-center">
+                    <small>@ViewBag.Title</small>
+                </span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <!-- SidebarSearch Form -->
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    Reports
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Report" asp-action="TimeAttReport">
+                                        <i class="left fas fa-angle-double-right"></i>
+                                        <p>Time Attendance Report</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Report" asp-action="TimeAttSummary">
+                                        <i class="left fas fa-angle-double-right"></i>
+                                        <p>Time Attendance Summary</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>
+                                    System Configuration
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Report" asp-action="TimeAttReport">
+                                        <i class="left fas fa-angle-double-right"></i>
+                                        <p>User Management</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Report" asp-action="TimeAttSummary">
+                                        <i class="left fas fa-angle-double-right"></i>
+                                        <p>Roles Assignment</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Report" asp-action="TimeAttSummary">
+                                        <i class="left fas fa-angle-double-right"></i>
+                                        <p>ReaderGroup Management</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Report" asp-action="TimeAttSummary">
+                                        <i class="left fas fa-angle-double-right"></i>
+                                        <p>ACL Gate Management</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Report" asp-action="TimeAttSummary">
+                                        <i class="left fas fa-angle-double-right"></i>
+                                        <p>Mapping Dept Code</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Add_ACL" class="nav-link">
+                                <i class="nav-icon fas fa-plus-square"></i>
+                                <p>
+                                    Add ACL
+                                </p>
+                            </a>
+                        </li>
+                        @*<li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Search & Edit
+                                </p>
+                            </a>
+                        </li>*@
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-lock"></i>
+                                <p>
+                                    Card Log
+                                </p>
+                            </a>
+                        </li>
+                        <div class="user-panel mt-2 mb-2"></div>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-key"></i>
+                                <p>
+                                    Change Password
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Contract" asp-controller="Home" class="nav-link">
+                                <i class="nav-icon fas fa-phone-square"></i>
+                                <p>
+                                    Contact us
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content">
+                @RenderBody()
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; @(2023 == DateTime.Now.Year ? DateTime.Now.Year.ToString() : "2023 - " + DateTime.Now.Year.ToString()) | Celestica Confidential</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0.0
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+
+
+    <div class="modal fade" id="modal-logout">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="far fa-user-circle"></i>
+                    <h4 class="modal-title">Logout</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to logout ?</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a type="button" asp-action="Logout" asp-controller="Login" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!-- ./wrapper -->
+    <!-- AdminLTE App -->
+    <script src="~/AdminLTE/dist/js/adminlte.js"></script>
+    <!-- ~/bundles/jqueryval -->
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <!-- ~/bundles/modernizr -->
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <!-- ~/bundles/jquery-->
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/sweetalert.min.js.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jszip.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
+    <script src="~/Scripts/default.js"></script>
+    <!-- ~/bundles/bootstrap -->
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+<script>
+
+    //$(document).on('click', '#navbarColor02 a.nav-link', function () {
+    //    const div = $(this).next();
+
+    //    if ($(this).hasClass('collapsed')) {
+    //        div.find('li').css('display', 'none');
+    //    } // end if: check show or not
+
+    //    setWidthSideMenu();
+    //    showSideMenu($('#btnSideMenu button i'));
+    //});
+
+</script>
+
+
+</html>

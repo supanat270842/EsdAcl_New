@@ -1,0 +1,179 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutLogin";
+}
+@section csses
+    {
+    <style>
+        .login-logo {
+        }
+
+        .box-login {
+            background: #F08800 !important;
+        }
+    </style>
+}
+
+<div class="main-login col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+    <div class="logo">&nbsp;</div>
+    <!-- start: LOGIN BOX -->
+
+    <div class="box-login">
+        <div class="login-logo">
+            <h2>EsdAcl Application</h2>
+        </div>
+
+        <h3>User Sign-In to System</h3>
+
+        <p>Please enter user name and password to log in.</p>
+
+        <div class="errorHandler alert alert-danger no-display">
+            <i class="fa fa-remove-sign"></i>
+            You have some form errors. Please check below.
+        </div>
+
+        <fieldset>
+            <div class="form-group">
+                <select name="domain" id="selDomain" class="form-control required" hidden></select>
+            </div>
+
+            <div class="form-group form-actions">
+                <span class="input-icon">
+                    <input type="text" class="form-control required" name="username" placeholder="Enter User Name" />
+                    <i class="fa fa-user"></i>
+                </span>
+            </div>
+
+            <div class="form-group form-actions">
+                <span class="input-icon">
+                    <input type="password" class="form-control password required" name="password" placeholder="Password" />
+                    <i class="fa fa-lock"></i>
+                </span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-bricky pull-right" onclick="login()">
+                    Login <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </div>
+
+            <div id="Msgbox" class="new-account" style="display:none">
+                &nbsp;
+            </div>
+
+            <div class="new-account">
+                This system is owned, operated and monitored by Celestica and contains confidential and proprietary information. Any access or use of this system not authorized by Celestica management is not permitted and may be reported to law enforcement authorities and/or be subject to civil action. If you are not authorized to access or use this system, disconnect now!
+            </div>
+        </fieldset>
+    </div>
+    <!-- end: LOGIN BOX -->
+    <!-- start: COPYRIGHT -->
+    <div class="copyright">
+        <p>&copy; @(2023 == DateTime.Now.Year ? DateTime.Now.Year.ToString() : "2023 - " + DateTime.Now.Year.ToString()) | Celestica Confidential</p>
+
+    </div>
+    <!-- end: COPYRIGHT -->
+</div>
+
+@section scripts
+    {
+    <script type="text/javascript">
+
+        //function
+        function loadDomain() {
+            const url = '@Url.Action("GetDomainName","Login")';
+            const sel = $('#selDomain');
+            let str = '';
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        $.each(data.list, function (key) {
+                            const item = data.list[key].name;
+                            const selected = item == 'ASIA' ? ' selected' : '';
+
+                            str += `<option value="${item}"${selected}>${item}</option>`;
+                        });
+
+                        sel.html(str);
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        function login() {
+            if (validate()) {
+                var DOMAIN = $('[name=domain]').val();
+                var USERNAME = $('[name=username]').val();
+                var PASSWORD = $('[name=password]').val();
+                var url = '@Url.Action("CheckLogin", "Login")';
+                var data = { 'USER': USERNAME, 'PASS': PASSWORD, 'DOMAIN': DOMAIN };
+
+                $.blockUI({ message: '<h3><img src="@Url.Content("~/AdminLTE/dist/img/loading.gif")" /> Please wait...</h3>' });
+
+                $.post(url, data, function (response) {
+                    if (response.result) {
+                        $.unblockUI();
+                        $('div.box-login').block({ message: null });
+                        //console.log('USER_NAME: ' + response.USER_NAME + '\n' + 'FULL_NAME: ' + response.FULL_NAME);
+                        location.href = '@Url.Action("Index", "Home")';
+                    } else {
+                        alert('Error! ' + response.Message);
+                        $.unblockUI();
+                    }
+                })
+                    .fail(function (xhr, status, error) {
+                        console.log(error);
+                        alert('Error! Username, Password is incorrect!');
+                        $.unblockUI();
+                    });
+            }
+        }
+
+        function validate() {
+            var result = true;
+
+            $('.required').each(function () {
+                if ($(this).val().trim().length === 0) {
+                    $(this).addClass('alert-warning');
+                    result = false;
+                }
+            });
+
+            if (!result) {
+                ClearMsgBox('#Msgbox');
+                $('#Msgbox').addClass('alert-warning').html('<b>Warning!</b> these field require.').show(300);
+                setTimeout(function () { $('#Msgbox').hide(500); }, 3000);
+            }
+
+            return result;
+        }
+
+        //event
+        $(document).on('keypress', '[name="username"]', function (e) {
+            if (e.keyCode == 13) {
+                $('[name="password"]').focus();
+            }
+        });
+
+        $(document).on('keypress', '[name="password"]', function (e) {
+            if (e.keyCode == 13) {
+                login();
+
+            }
+        });
+
+        //loadpage
+        $(function () {
+            loadDomain();
+        });
+    </script>
+}
+
