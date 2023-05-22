@@ -13,20 +13,20 @@ namespace EsdAcl_New.Controllers
             ViewBag.ProjectName = "eRSN NEW";
             if (User.Identity.Name != null)
             {
+                ViewBag.FullName = "ASIA" + @"\" +  User.Identity.Name.Substring(0, User.Identity.Name.Length - 11);
                 ViewBag.Name = User.Identity.Name.Substring(0, User.Identity.Name.Length - 11);
                 var ipAddress = User.Identity.Name;
                 ViewBag.ID = ipAddress.Substring(User.Identity.Name.Length - 10);
-                ViewData["EXID"] = ipAddress.Substring(User.Identity.Name.Length - 10);
                 ViewBag.IP = Request.HttpContext.Connection.RemoteIpAddress;
             }
             else
             {
+                ViewBag.FullName = "GUEST";
                 ViewBag.ID = "UNKNOW";
                 ViewBag.Name = "GUEST";
                 ViewBag.IP = "ERROR";
                 ViewData["EXID"] = "null";
             }
-
 
             base.OnActionExecuting(context);
         }

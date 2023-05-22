@@ -30,7 +30,7 @@
             <div class="row form-group">
                 <label for="txtEmp" class="col-md-2 col-sm-4 col-form-label">Employee No :</label>
                 <div class="col-md-4 col-sm-8">
-                    <input type="text" id="txtEmp" class="form-control" maxlength="8" />
+                    <input type="text" id="txtEmp" class="form-control" maxlength="10" />
 
                 </div>
                 <div class="col-md-6">
@@ -87,10 +87,10 @@
             <div class="row form-group">
                 <label for="txtHand" class="col-md-2 col-sm-4 col-form-label ">Handicap :</label>
                 <div class="col-md-3 col-sm-8 pt-2">
-                    <input type="radio" name="yorn" value="Yes" id="Y class="gg" />
-                    <label class="mr-4" for="Y">Yes</label>
-                    <input type="radio" name="yorn" value="No" id="N" checked="checked" />
-                    <label for="N">No</label>
+                    <input type="radio" name="txtHand" value="Y" id="rdYES" />
+                    <label class="mr-4">Yes</label>
+                    <input type="radio" name="txtHand" value="N" id="rdNO" checked />
+                    <label>No</label>
                 </div>
             </div>
 
@@ -100,13 +100,13 @@
                         <i class="fas fa-plus"></i>
                         Create
                     </button>
-                    <button type="button" class="btn btn-warning" id="btnSearch">
+                    <button type="button" class="btn btn-secondary" id="btnSearch">
                         <i class="fas fa-search"></i>
                         Search
                     </button>
+
                 </div>
             </div>
-
         </form>
     </fieldset>
 
@@ -134,7 +134,7 @@
         }
 
         function reset() {
-            const frmMain = $('#frmMain input, #frmMain select');
+            const frmMain = $('#frmMain input:not(input[type="radio"]), #frmMain select');
             $.each(frmMain, function () {
                 $(this).val('');
 
@@ -153,18 +153,23 @@
         function CreateACL() {
             const url = '@Url.Action("CreateACL" , "Add_ACL")';
             const param = {};
-            const radioButtons = document.querySelectorAll('input[name="btnSelect"]');
 
-            $.each($('#frmMain input, #frmMain select'), function () {
-                param[$(this).attr('id')] = $(this).val();
+            $.each($('#frmMain input:not(#frmMain input[type="radio"]), #frmMain select,#frmMain input[type="radio"]:checked'), function () {
+
+                if ($(this).attr('name') === 'txtHand') {
+                    param[$(this).attr('name')] = $(this).val();
+                } else {
+                    param[$(this).attr('id')] = $(this).val();
+                }
             });
-
-            console.log(param);
 
             $.ajax({
                 url: url,
                 data: param,
-                type: 'POST'
+                type: 'POST',
+                success: function (data) {
+                    window.location = "@Url.Action("Index","Add_ACL")";
+                }
             });
         }
 
@@ -182,8 +187,6 @@
                 type: 'POST',
                 success: function (data) {
                     if (data.result) {
-                        console.log(data.list);
-                        //SetDataTable(data.list);
                         const pData = JSON.parse(data.list);
                         const fullName = pData[0].emp_name;
                         const position = pData[0].emp_position;
@@ -208,7 +211,7 @@
                         SetDataTable(data.list);
                     }
                 }
-            })
+            });
         }
 
         function SetDataTable(jsonObj) {
@@ -267,7 +270,7 @@
                     },
                     {
                         targets: 5,
-                        className: 'td-right',
+                        className: 'td-center',
                     },
                     {
                         targets: 6,
@@ -316,12 +319,7 @@
             window.location = "@Url.Action("Index","Search")";
         });
 
-        $(document).ready(function () {
-            $("#btnTest").click(function () {
-                const valueTest = $('input[name=yorn]:checked').val();
-                console.log(valueTest)
-            });
-        })
+
 
         $(window).resize(function () {
             setTableWidth();

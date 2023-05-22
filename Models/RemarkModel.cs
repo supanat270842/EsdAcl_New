@@ -13,3 +13,17 @@ public class RemarkModel
     public List<ListRemark> list { get; set; }
 }
 
+public class ListNameRemark
+{
+    public string esd_remark_desc { get; set; }
+}
+
+public class RemarkNameModel
+{
+    public bool results { get; set; }
+    public string message { get; set; }
+    public List<ListNameRemark> list { get; set; }
+}
+
+
+

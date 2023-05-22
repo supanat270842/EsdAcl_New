@@ -11,6 +11,7 @@
         public string lasT_REMARK { get; set; }
     }
 
+
     public class AClModel
     {
         public bool results { get; set; }
