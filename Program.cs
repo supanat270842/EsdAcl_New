@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("User", p => p.RequireRole("user"));
 });
 
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,6 +42,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseNotyf();
 app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();

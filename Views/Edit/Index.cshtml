@@ -54,7 +54,7 @@
             <div class="row form-group">
                 <label for="txtEmp" class="col-md-2 col-sm-4 col-form-label">Employee No :</label>
                 <div class="col-md-4 col-sm-8">
-                    <input type="text" id="txtEmp" class="form-control" maxlength="8" />
+                    <input type="text" id="txtEmp" class="form-control" maxlength="10" />
 
                 </div>
                 <label for="txtName" class="col-md-2 col-sm-4 col-form-label ">Name :</label>
@@ -92,10 +92,10 @@
             <div class="row form-group">
                 <label for="txtHand" class="col-md-2 col-sm-4 col-form-label ">Handicap :</label>
                 <div class="col-md-4 col-sm-8 pt-2">
-                    <input type="radio" name="yorn" value="Yes" id="Y" class="gg" />
-                    <label class="mr-4" for="Y">Yes</label>
-                    <input type="radio" name="yorn" value="No" id="N" checked="checked" />
-                    <label for="N">No</label>
+                    <input type="radio" name="txtHand" value="Y" id="rdYES" />
+                    <label class="mr-4">Yes</label>
+                    <input type="radio" name="txtHand" value="N" id="rdNO" checked />
+                    <label>No</label>
                 </div>
                 <label for="txtCardsts" class="col-md-2 col-sm-4 col-form-label">Card status :</label>
                 <div class="col-md-4 col-sm-8">
@@ -118,9 +118,9 @@
 
             <div class="row form-group">
                 <div class="col-md-5 col-sm-8">
-                    <button type="button" class="btn btn-success mr-3" id="btnEdit">
+                    <button type="button" class="btn btn-primary mr-3" id="btnEdit">
                         <i class="fas fa-edit"></i>
-                        Edit
+                        Save
                     </button>
                 </div>
             </div>
@@ -128,24 +128,38 @@
     </fieldset>
 </div>
 
-@section scripts
-    {
+@section scripts {
     <script>
 
         //function
-
         function edit() {
+            if ($('#txtEmp').val() != '') {
+                EditACL();
+            } else {
+                swal("Error!", "Please select your condition first!", "error");
+            }
+        }
+
+        function EditACL() {
             const url = '@Url.Action("EditACL","Edit")';
             const param = {};
 
-            $.each($('#frmMain .form-control'), function () {
-                param[$(this).attr('id')] = $(this).val();
+            $.each($('#frmMain input:not(#frmMain input[type="radio"]), #frmMain select,#frmMain input[type="radio"]:checked'), function () {
+
+                if ($(this).attr('name') === 'txtHand') {
+                    param[$(this).attr('name')] = $(this).val();
+                } else {
+                    param[$(this).attr('id')] = $(this).val();
+                }
             });
 
             $.ajax({
                 url: url,
                 data: param,
                 type: 'POST',
+                success: function (data) {
+                    window.location = "@Url.Action("Index","Search")";
+                }
             });
         }
 
@@ -153,6 +167,7 @@
         $(document).on('click', '#btnEdit', function () {
             edit();
         });
+
                 //page load
 
 

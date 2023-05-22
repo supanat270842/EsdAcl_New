@@ -61,6 +61,32 @@ namespace EsdAcl_New.Services
             }
         }
 
+        public static async Task<RemarkNameModel> GetRemarkName(string remarkId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    const string baseUrl = "https://localhost:7162";
+                    string function = "/api/Get/GetRemarkName" + 
+                        $"?remarkId={remarkId}";
+
+                    client.BaseAddress = new Uri(baseUrl);
+                    var response = await client.GetAsync(function);
+                    response.EnsureSuccessStatusCode();
+
+                    var strResponse = await response.Content.ReadAsStringAsync();
+                    RemarkNameModel result = JsonConvert.DeserializeObject<RemarkNameModel>(strResponse);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         public static async Task<AClModel> GetACL()
         {
             using (HttpClient client = new HttpClient())
@@ -86,7 +112,7 @@ namespace EsdAcl_New.Services
             }
         }
 
-        public static async Task<SearchModel> GetSearch(InputSearch param)
+        public static async Task<SearchModel> GetSearch(InputSearch param, string _sDate, string _eDate)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -98,9 +124,9 @@ namespace EsdAcl_New.Services
                     string backNo = param.txtBack;
                     string cardNo = param.txtCard;
                     string cardType = param.txtCType;
+                    string stDate = _sDate;
+                    string enDate = _eDate;
                     string createBy = param.txtCreateBy;
-                    string stDate = param.txtDateSt;
-                    string enDate = param.txtDateEn;
                     string cardSts = param.txtCardStatus;
                     string remark = param.txtRemark;
 
@@ -351,6 +377,33 @@ namespace EsdAcl_New.Services
                 catch (HttpRequestException e)
                 {
                     throw new InvalidOperationException("EditACL" + e.Message);
+                }
+            }
+        }
+
+        public static async Task<ListDelete> DeleteACL(string txtCard)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    const string baseUrl = "https://localhost:7162";
+                    string function = "/api/Delete/DeleteACL" +
+                    $"?CARD_ID={txtCard}";
+
+                    client.BaseAddress = new Uri(baseUrl);
+                    var httpContent = new StringContent("");
+                    var response = await client.DeleteAsync(function);
+                    response.EnsureSuccessStatusCode();
+
+                    var strResponse = await response.Content.ReadAsStringAsync();
+                    ListDelete result = JsonConvert.DeserializeObject<ListDelete>(strResponse);
+
+                    return result;
+                }
+                catch (HttpRequestException e)
+                {
+                    throw new InvalidOperationException("DeleteACL" + e.Message);
                 }
             }
         }
