@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsdAcl_API", "..\EsdAcl_API\EsdAcl_API.csproj", "{C06A01B1-6AF9-4A8A-AF1C-05750159DD4F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsdAcl_New", "EsdAcl_New.csproj", "{B92EB2E8-9642-4B30-B3EF-4958C2C6B02B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C06A01B1-6AF9-4A8A-AF1C-05750159DD4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06A01B1-6AF9-4A8A-AF1C-05750159DD4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06A01B1-6AF9-4A8A-AF1C-05750159DD4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06A01B1-6AF9-4A8A-AF1C-05750159DD4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B92EB2E8-9642-4B30-B3EF-4958C2C6B02B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B92EB2E8-9642-4B30-B3EF-4958C2C6B02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B92EB2E8-9642-4B30-B3EF-4958C2C6B02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B92EB2E8-9642-4B30-B3EF-4958C2C6B02B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {988702D1-57AE-4CE4-932D-CBC90A99E994}
+	EndGlobalSection
+EndGlobal

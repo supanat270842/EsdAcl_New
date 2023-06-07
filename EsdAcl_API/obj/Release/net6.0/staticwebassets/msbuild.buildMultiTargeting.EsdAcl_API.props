@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EsdAcl_API.props" />
+</Project>

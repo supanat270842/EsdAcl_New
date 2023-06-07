@@ -1,0 +1,77 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = EsdAcl_New
+build_property.RootNamespace = EsdAcl_New
+build_property.ProjectDir = C:\it_coderepo\GitHub\EsdAcl_New\EsdAcl_New\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\it_coderepo\GitHub\EsdAcl_New\EsdAcl_New
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Add_ACL/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRkX0FDTFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Edit/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Home/Contract.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250cmFjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Report/TimeAttReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XFRpbWVBdHRSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Report/TimeAttSummary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XFRpbWVBdHRTdW1tYXJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Search/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-lbe4xrbxdp
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Shared/_LayoutLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-o7uwhvjn8r
+
+[C:/it_coderepo/GitHub/EsdAcl_New/EsdAcl_New/Views/Shared/_Main.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NYWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-8429hx96jb
